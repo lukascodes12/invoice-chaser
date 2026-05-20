@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoice Chaser – Get Paid Faster</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; color: #1a1a1a; min-height: 100vh; }
+    header { background: #fff; border-bottom: 1px solid #e5e5e5; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+    header h1 { font-size: 1.2rem; font-weight: 600; }
+    header span { font-size: 13px; color: #666; }
+    .hero { background: #fff; border-bottom: 1px solid #e5e5e5; padding: 2.5rem 2rem; text-align: center; }
+    .hero h2 { font-size: 1.8rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .hero p { color: #555; font-size: 1rem; max-width: 480px; margin: 0 auto; }
+    .container { max-width: 680px; margin: 2rem auto; padding: 0 1rem; }
+    .card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+    .card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 1.25rem; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+    .field label { font-size: 13px; color: #555; font-weight: 500; }
+    .field input { padding: 9px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; outline: none; transition: border 0.15s; }
+    .field input:focus { border-color: #555; }
+    .btn-generate { width: 100%; padding: 12px; font-size: 15px; font-weight: 600; background: #1a1a1a; color: #fff; border: none; border-radius: 8px; cursor: pointer; margin-top: 4px; transition: background 0.15s; }
+    .btn-generate:hover { background: #333; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 1rem; }
+    .tab { padding: 7px 16px; border-radius: 8px; border: 1px solid #ddd; background: #f5f5f5; font-size: 13px; cursor: pointer; color: #555; transition: all 0.15s; }
+    .tab.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; font-weight: 500; }
+    .badge { display: inline-block; font-size: 11px; padding: 3px 10px; border-radius: 20px; margin-bottom: 10px; font-weight: 500; }
+    .badge.friendly { background: #e6f4ea; color: #2d6a3f; }
+    .badge.firm { background: #fff3e0; color: #b45309; }
+    .badge.final { background: #fde8e8; color: #b91c1c; }
+    .email-subject { font-size: 12px; color: #777; padding-bottom: 10px; border-bottom: 1px solid #eee; margin-bottom: 10px; }
+    .email-body { background: #f9f9f9; border-radius: 8px; padding: 1rem; font-size: 13.5px; line-height: 1.75; color: #1a1a1a; white-space: pre-wrap; min-height: 180px; }
+    .btn-copy { margin-top: 10px; padding: 7px 16px; font-size: 13px; border: 1px solid #ddd; border-radius: 8px; background: #fff; cursor: pointer; transition: background 0.15s; }
+    .btn-copy:hover { background: #f5f5f5; }
+    .hidden { display: none; }
+    .error { color: #b91c1c; font-size: 13px; padding: 0.75rem; background: #fde8e8; border-radius: 8px; margin-top: 8px; }
+    footer { text-align: center; padding: 2rem; font-size: 12px; color: #aaa; }
+    @media (max-width: 520px) { .grid { grid-template-columns: 1fr; } .hero h2 { font-size: 1.4rem; } }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>📬 Invoice Chaser</h1>
+  <span>Stop chasing. Start getting paid.</span>
+</header>
+
+<div class="hero">
+  <h2>Get your invoices paid — fast</h2>
+  <p>Fill in your invoice details and we'll instantly generate a professional 3-email follow-up sequence for you.</p>
+</div>
+
+<div class="container">
+  <div class="card">
+    <h3>Invoice details</h3>
+    <div class="grid">
+      <div class="field">
+        <label for="clientName">Client name</label>
+        <input type="text" id="clientName" placeholder="e.g. John Smith" />
+      </div>
+      <div class="field">
+        <label for="clientEmail">Client email</label>
+        <input type="email" id="clientEmail" placeholder="e.g. john@email.com" />
+      </div>
+    </div>
+    <div class="grid">
+      <div class="field">
+        <label for="businessName">Your business name</label>
+        <input type="text" id="businessName" placeholder="e.g. Apex Plumbing" />
+      </div>
+      <div class="field">
+        <label for="yourName">Your name</label>
+        <input type="text" id="yourName" placeholder="e.g. Mike Torres" />
+      </div>
+    </div>
+    <div class="grid">
+      <div class="field">
+        <label for="invoiceNum">Invoice number</label>
+        <input type="text" id="invoiceNum" placeholder="e.g. INV-042" />
+      </div>
+      <div class="field">
+        <label for="amount">Amount owed</label>
+        <input type="text" id="amount" placeholder="e.g. $1,250.00" />
+      </div>
+    </div>
+    <div class="grid">
+      <div class="field">
+        <label for="dueDate">Original due date</label>
+        <input type="text" id="dueDate" placeholder="e.g. May 1, 2026" />
+      </div>
+      <div class="field">
+        <label for="payMethod">Payment method</label>
+        <input type="text" id="payMethod" placeholder="e.g. e-Transfer, PayPal" />
+      </div>
+    </div>
+    <button class="btn-generate" onclick="generateEmails()">Generate my email sequence →</button>
+    <div id="errorMsg" class="error hidden"></div>
+  </div>
+
+  <div id="resultsSection" class="hidden">
+    <div class="card">
+      <h3>Your 3-email sequence</h3>
+      <div class="tabs">
+        <button class="tab active" onclick="showTab(0, this)">Email 1</button>
+        <button class="tab" onclick="showTab(1, this)">Email 2</button>
+        <button class="tab" onclick="showTab(2, this)">Email 3</button>
+      </div>
+
+      <div id="emailContent">
+        <div id="tab0">
+          <span class="badge friendly">Friendly reminder · 7 days overdue</span>
+          <div class="email-subject" id="subject0"></div>
+          <div class="email-body" id="body0"></div>
+          <button class="btn-copy" onclick="copyEmail(0)">Copy email</button>
+        </div>
+        <div id="tab1" class="hidden">
+          <span class="badge firm">Firm follow-up · 14 days overdue</span>
+          <div class="email-subject" id="subject1"></div>
+          <div class="email-body" id="body1"></div>
+          <button class="btn-copy" onclick="copyEmail(1)">Copy email</button>
+        </div>
+        <div id="tab2" class="hidden">
+          <span class="badge final">Final notice · 30 days overdue</span>
+          <div class="email-subject" id="subject2"></div>
+          <div class="email-body" id="body2"></div>
+          <button class="btn-copy" onclick="copyEmail(2)">Copy email</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>Invoice Chaser &copy; 2026</footer>
+
+<script>
+  function showTab(index, btn) {
+    [0,1,2].forEach(i => {
+      document.getElementById('tab' + i).classList.toggle('hidden', i !== index);
+    });
+    document.querySelectorAll('.tab').forEach((t, i) => {
+      t.classList.toggle('active', i === index);
+    });
+  }
+
+  function generateEmails() {
+    const clientName = document.getElementById('clientName').value.trim() || 'there';
+    const clientEmail = document.getElementById('clientEmail').value.trim();
+    const businessName = document.getElementById('businessName').value.trim() || 'our business';
+    const yourName = document.getElementById('yourName').value.trim() || 'The Team';
+    const invoiceNum = document.getElementById('invoiceNum').value.trim() || 'INV-001';
+    const amount = document.getElementById('amount').value.trim() || 'the outstanding amount';
+    const dueDate = document.getElementById('dueDate').value.trim() || 'the due date';
+    const payMethod = document.getElementById('payMethod').value.trim() || 'bank transfer or e-Transfer';
+
+    const errorEl = document.getElementById('errorMsg');
+    if (!document.getElementById('clientName').value.trim() || !document.getElementById('invoiceNum').value.trim() || !document.getElementById('amount').value.trim()) {
+      errorEl.textContent = 'Please fill in at least the client name, invoice number, and amount.';
+      errorEl.classList.remove('hidden');
+      return;
+    }
+    errorEl.classList.add('hidden');
+
+    const emails = [
+      {
+        subject: `Friendly reminder – Invoice ${invoiceNum} due`,
+        body: `Hi ${clientName},
+
+I hope you're doing well! I just wanted to send a quick reminder that Invoice ${invoiceNum} for ${amount}, which was due on ${dueDate}, is still outstanding.
+
+If you've already sent payment, please disregard this message — and thank you!
+
+If not, you can pay via ${payMethod} at your earliest convenience. Please don't hesitate to reach out if you have any questions.
+
+Thanks so much,
+${yourName}
+${businessName}`
+      },
+      {
+        subject: `Second notice – Invoice ${invoiceNum} now 14 days overdue`,
+        body: `Hi ${clientName},
+
+I'm following up on my previous email regarding Invoice ${invoiceNum} for ${amount}, which is now 14 days past due.
+
+I understand things get busy, but I'd appreciate it if you could arrange payment at your earliest convenience. If there's an issue with the invoice or you'd like to discuss a payment plan, I'm happy to chat.
+
+Please confirm receipt of this email and let me know when I can expect payment.
+
+Payment can be made via ${payMethod}.
+
+Kind regards,
+${yourName}
+${businessName}`
+      },
+      {
+        subject: `Final notice – Invoice ${invoiceNum} requires immediate attention`,
+        body: `Hi ${clientName},
+
+This is a final notice regarding Invoice ${invoiceNum} for ${amount}, which is now 30 days overdue despite two previous reminders.
+
+I require payment in full within the next 7 days. If payment is not received by then, I will have no choice but to apply a late fee and refer this matter to a collections agency.
+
+I would much prefer to resolve this directly with you. Please contact me immediately to arrange payment via ${payMethod} or to discuss the situation.
+
+Regards,
+${yourName}
+${businessName}`
+      }
+    ];
+
+    document.getElementById('subject0').textContent = 'Subject: ' + emails[0].subject;
+    document.getElementById('body0').textContent = emails[0].body;
+    document.getElementById('subject1').textContent = 'Subject: ' + emails[1].subject;
+    document.getElementById('body1').textContent = emails[1].body;
+    document.getElementById('subject2').textContent = 'Subject: ' + emails[2].subject;
+    document.getElementById('body2').textContent = emails[2].body;
+
+    document.getElementById('resultsSection').classList.remove('hidden');
+    showTab(0, document.querySelectorAll('.tab')[0]);
+  }
+
+  function copyEmail(index) {
+    const subject = document.getElementById('subject' + index).textContent;
+    const body = document.getElementById('body' + index).textContent;
+    navigator.clipboard.writeText(subject + '\n\n' + body);
+    const btns = document.querySelectorAll('.btn-copy');
+    btns[index].textContent = 'Copied!';
+    setTimeout(() => { btns[index].textContent = 'Copy email'; }, 2000);
+  }
+</script>
+</body>
+</html>
