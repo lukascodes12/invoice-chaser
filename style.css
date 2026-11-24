@@ -14,7 +14,7 @@ header nav a:hover { color: var(--ink); }
 .container { max-width: 880px; margin: 2.5rem auto; padding: 0 1.25rem; }
 .narrow { max-width: 720px; }
 .section-title { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 1rem; }
-.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
 .card { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; margin-bottom: 1.25rem; }
 .cards .card { margin-bottom: 0; }
 .card h2, .card h3 { font-size: 1.1rem; margin-bottom: .4rem; }
