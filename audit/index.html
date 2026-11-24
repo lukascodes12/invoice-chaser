@@ -591,50 +591,17 @@ async function generateReport() {
   const painText = a.biggest_pain || 'not provided';
   const revenueText = a.revenue !== undefined ? q[6].options[a.revenue].text : 'unspecified';
 
-  const prompt = `You are an AI business consultant specializing in small business automation. A business owner just completed an audit. Based on their answers, produce a personalized AI Opportunity Report.
-
-Business details:
-- Industry: ${industryText}
-- Team size: ${sizeText}
-- Biggest time drain: ${timeDrainText}
-- Current software: ${softwareText}
-- Current AI use: ${aiUseText}
-- Biggest pain point: ${painText}
-- Monthly revenue: ${revenueText}
-
-Respond ONLY with a JSON object in this exact format, no markdown, no backticks, no extra text:
-{
-  "headline": "short punchy headline about their biggest opportunity (max 10 words)",
-  "summary": "2 sentence summary of their situation and what's possible",
-  "opportunities": [
-    {
-      "icon": "emoji",
-      "title": "opportunity title",
-      "description": "1-2 sentences on what to automate and how",
-      "tool": "specific tool name to use (e.g. ChatGPT, Jobber AI, Zapier)",
-      "saving": "estimated hours saved per week e.g. Save 3-4 hrs/week"
-    }
-  ],
-  "quickWin": "The single most important first step they should take this week, in plain English"
-}
-
-Give exactly 3 opportunities, ordered from quickest win to longer term. Be specific to their industry and pain points. Keep language simple and direct — no jargon.`;
-
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('/api/audit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        messages: [{ role: 'user', content: prompt }]
+        industry: industryText, size: sizeText, timeDrain: timeDrainText,
+        software: softwareText, aiUse: aiUseText, pain: painText, revenue: revenueText
       })
     });
-
-    const data = await response.json();
-    const text = data.content.map(c => c.text || '').join('');
-    const clean = text.replace(/```json|```/g, '').trim();
-    const report = JSON.parse(clean);
+    if (!response.ok) throw new Error('Server error ' + response.status);
+    const report = await response.json();
     showReport(report);
   } catch (err) {
     showError();
